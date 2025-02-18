@@ -7,11 +7,29 @@ sources:
     tables:
       - name: sales
         identifier: raw_gz_sales
-        
+        description: sales of Greenweez / we have one row per product_id found in each orders_id
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' ||pdt_id)"
+
       - name: product
         identifier: raw_gz_product
-      
+        columns:
+          - name: products_id
+            tests:
+              - not_null
+              - unique
+
+
       - name: ship
         identifier: raw_gz_ship
-        
-          
+        columns:
+          - name: orders_id
+            tests:
+              - not_null
+              - unique
+          - name: logCost
+            tests:
+              - not_null
+
+
